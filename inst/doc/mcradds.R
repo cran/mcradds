@@ -13,11 +13,12 @@ library(mcradds)
 ## -----------------------------------------------------------------------------
 data("qualData")
 data("platelet")
-# data(creatinine, package = "mcr")
+data(creatinine, package = "mcr")
 data("calcium")
 data("ldlroc")
 data("PDL1RP")
 data("glucose")
+data("adsl_sub")
 
 ## -----------------------------------------------------------------------------
 size_one_prop(p1 = 0.9, p0 = 0.85, alpha = 0.05, power = 0.8)
@@ -33,6 +34,41 @@ size_corr(r1 = 0.95, r0 = 0.9, alpha = 0.025, power = 0.8, alternative = "greate
 
 ## -----------------------------------------------------------------------------
 size_ci_corr(r = 0.9, lr = 0.85, alpha = 0.025, alternative = "greater")
+
+## -----------------------------------------------------------------------------
+adsl_sub %>%
+  descfreq(
+    var = "AGEGR1",
+    bygroup = "TRTP",
+    format = "xx (xx.x%)"
+  )
+
+## -----------------------------------------------------------------------------
+adsl_sub %>%
+  descfreq(
+    var = c("AGEGR1", "SEX", "RACE"),
+    bygroup = "TRTP",
+    format = "xx (xx.x%)",
+    addtot = TRUE,
+    na_str = "0"
+  )
+
+## -----------------------------------------------------------------------------
+adsl_sub %>%
+  descvar(
+    var = "AGE",
+    bygroup = "TRTP"
+  )
+
+## -----------------------------------------------------------------------------
+adsl_sub %>%
+  descvar(
+    var = c("AGE", "BMIBL", "HEIGHTBL"),
+    bygroup = "TRTP",
+    stats = c("N", "MEANSD", "MEDIAN", "RANGE", "IQR"),
+    autodecimal = TRUE,
+    addtot = TRUE
+  )
 
 ## -----------------------------------------------------------------------------
 head(qualData)
@@ -73,21 +109,21 @@ tb %>% getAccuracy(ref = "r", r_ci = "clopper-pearson")
 # When the reference is a comparative assay, not gold standard.
 tb %>% getAccuracy(ref = "nr", nr_ci = "wilson")
 
-## ----eval = FALSE-------------------------------------------------------------
-#  # Deming regression
-#  fit <- mcreg(
-#    x = platelet$Comparative, y = platelet$Candidate,
-#    error.ratio = 1, method.reg = "Deming", method.ci = "jackknife"
-#  )
-#  printSummary(fit)
-#  getCoefficients(fit)
+## -----------------------------------------------------------------------------
+# Deming regression
+fit <- mcreg(
+  x = platelet$Comparative, y = platelet$Candidate,
+  error.ratio = 1, method.reg = "Deming", method.ci = "jackknife"
+)
+printSummary(fit)
+getCoefficients(fit)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  # absolute bias.
-#  calcBias(fit, x.levels = c(30))
-#  
-#  # proportional bias.
-#  calcBias(fit, x.levels = c(30), type = "proportional")
+## -----------------------------------------------------------------------------
+# absolute bias.
+calcBias(fit, x.levels = c(30))
+
+# proportional bias.
+calcBias(fit, x.levels = c(30), type = "proportional")
 
 ## -----------------------------------------------------------------------------
 # Default difference type
@@ -110,7 +146,7 @@ out$stat
 out$outmat
 
 # 4E approach
-ba2 <- blandAltman(x = platelet$Comparative, y = platelet$Candidate)
+ba2 <- blandAltman(x = creatinine$serum.crea, y = creatinine$plasma.crea)
 out2 <- getOutlier(ba2, method = "4E")
 out2$stat
 out2$outmat
@@ -219,24 +255,24 @@ autoplot(
   y.title = "Reference - Test"
 )
 
-## ----eval = FALSE-------------------------------------------------------------
-#  fit <- mcreg2(
-#    x = platelet$Comparative, y = platelet$Candidate,
-#    method.reg = "PaBa", method.ci = "bootstrap"
-#  )
-#  autoplot(fit)
+## -----------------------------------------------------------------------------
+fit <- mcreg(
+  x = platelet$Comparative, y = platelet$Candidate,
+  method.reg = "PaBa", method.ci = "bootstrap"
+)
+autoplot(fit)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  autoplot(
-#    fit,
-#    identity.params = list(col = "blue", linetype = "solid"),
-#    reg.params = list(col = "red", linetype = "solid"),
-#    equal.axis = TRUE,
-#    legend.title = FALSE,
-#    legend.digits = 3,
-#    x.title = "Reference",
-#    y.title = "Test"
-#  )
+## -----------------------------------------------------------------------------
+autoplot(
+  fit,
+  identity.params = list(col = "blue", linetype = "solid"),
+  reg.params = list(col = "red", linetype = "solid"),
+  equal.axis = TRUE,
+  legend.title = FALSE,
+  legend.digits = 3,
+  x.title = "Reference",
+  y.title = "Test"
+)
 
 ## ----sessionInfo, echo=FALSE--------------------------------------------------
 sessionInfo()

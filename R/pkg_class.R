@@ -273,47 +273,42 @@ tpROC <- function(testROC, refROC, method, H0, stat) {
   )
 }
 
-# MCR-class ----
+# Desc-class ----
 
-#' Method Comparison Regression Class
+#' Descriptive Statistics Class
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' The `MCR` class serves as a simplified version of `MCResult` from `mcr` package.
-#' As the `mcr` package are not available in CRAN, this class is took as the temporary
-#' replacement of it, which only contains the some necessaries for `autoplot`.
+#' The `Desc` class serves as the store for results from frequency and univariate
+#' statistics analysis.
 #'
-#' @slot data data
-#' @slot coef coef
-#' @slot mnames mnames
-#' @slot regmeth regmeth
+#' @slot func func
+#' @slot mat mat
+#' @slot stat stat
 #'
-#' @rdname MCR-class
-#' @aliases MCR
+#' @rdname Desc-class
+#' @aliases Desc
 setClass(
-  "MCR",
+  "Desc",
   slots = c(
-    data = "data.frame",
-    coef = "numeric",
-    mnames = "character",
-    regmeth = "character"
+    func = "character",
+    mat = "data.frame",
+    stat = "data.frame"
   )
 )
 
-# MCR-constructors ----
+# Desc-constructors ----
 
-#' @rdname MCR-class
+#' @rdname Desc-class
 #'
-#' @param data (`data.frame`)\cr original data.
-#' @param coef (`numeric`)\cr a numeric vector contains slope and intercept.
-#' @param mnames (`character`)\cr name of X and Y assays, default are 'Method1'
-#'  and 'Method2' if you have not defined them in `mcreg` function.
-#' @param regmeth (`character`)\cr name of regression.
+#' @param func (`character`)\cr name of function.
+#' @param mat (`data.frame`)\cr intermediate data with long form, easy for post-processing.
+#' @param stat (`data.frame`)\cr final data with wide form, easy for presentation.
 #'
-#' @return An object of class `MCR`.
+#' @return An object of class `Desc`.
 #'
-MCR <- function(data, coef, mnames, regmeth) {
-  new("MCR",
-    data = data, coef = coef, mnames = mnames, regmeth = regmeth
+Desc <- function(func, mat, stat) {
+  new("Desc",
+    func = func, mat = mat, stat = stat
   )
 }

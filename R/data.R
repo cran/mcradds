@@ -12,7 +12,7 @@
 #'    \item{Candidate}{Measurements from candidate analyzer}
 #' }
 #' @source CLSI-EP09 A3 Appendix H, Table H2 is cited in this data set.
-#' @seealso From `mcr` package, `creatinine` data set contains data with with serum and plasma
+#' @seealso From `mcr` package, [mcr::creatinine] data set contains data with with serum and plasma
 #' creatinin measurements in mg/dL for each sample.
 "platelet"
 
@@ -49,7 +49,6 @@
 #'    \item{Group}{Sex group of target subjects}
 #' }
 #' @source CLSI-EP28A3 Table 4. is cited in this data set.
-#' @seealso [mcradds::platelet].
 "calcium"
 
 #' Nonparametric Rank Number of Reference Interval
@@ -139,3 +138,16 @@
 #' }
 #'
 "PDL1RP"
+
+#' CDISC ADSL Subsetting Data
+#'
+#' @description `r lifecycle::badge("experimental")`
+#'
+#' This ADSL is created by subsetting the CDISC ADSL with 60 subjects in each of two
+#' treatments like placebo and Xanomeline (this one corresponds to high dose level
+#' in the original ADSL).
+#'
+#' @format A [mcradds::adsl_sub] data set contains 120 observations and 14 variables.
+#' And the description of each variable has been labeled in data set.
+#'
+"adsl_sub"
