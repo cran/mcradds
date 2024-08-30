@@ -1,7 +1,7 @@
 Package: mcradds
 Type: Package
 Title: Processing and Analyzing of Diagnostics Trials
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person("Kai", "Gu", , "gukai1212@163.com", role = c("aut", "cre", "cph"))
     )
@@ -26,14 +26,14 @@ Suggests: knitr, rmarkdown, spelling, testthat (>= 3.0.0), usethis,
         vdiffr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Collate: 'pkg_class.R' 'pkg_methods.R' 'autoplot.R' 'blandAltman.R'
         'correlation.R' 'data.R' 'desc.R' 'mcr.R' 'outlier.R'
         'package.R' 'pairedroc.R' 'qual_stat.R' 'referenceInterval.R'
         'samplesize.R' 'utils.R' 'vca.R'
 Language: en-US
 NeedsCompilation: no
-Packaged: 2023-12-04 05:12:45 UTC; TJ0695
+Packaged: 2024-08-30 02:51:35 UTC; TH0528
 Author: Kai Gu [aut, cre, cph]
 Repository: CRAN
-Date/Publication: 2023-12-04 05:30:02 UTC
+Date/Publication: 2024-08-30 04:30:01 UTC
